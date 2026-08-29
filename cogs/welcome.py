@@ -1,9 +1,8 @@
 """Welcome & goodbye messages."""
 import discord
 from discord.ext import commands
-
-from ..db import get_guild, update_guild
-from ..helpers import ok, embed
+from db import get_guild, update_guild
+from helpers import ok, embed
 
 
 def _fmt(msg: str, member: discord.Member) -> str:
