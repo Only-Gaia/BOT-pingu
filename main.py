@@ -2,7 +2,6 @@
 import os
 import logging
 from pathlib import Path
-
 import discord
 from discord.ext import commands
 from dotenv import load_dotenv
@@ -16,7 +15,6 @@ PREFIX = os.environ.get("BOT_PREFIX", "?")
 TOKEN = os.environ.get("DISCORD_TOKEN")
 
 intents = discord.Intents.all()
-
 bot = commands.Bot(
     command_prefix=PREFIX,
     intents=intents,
@@ -46,7 +44,7 @@ async def on_ready():
 
 @bot.event
 async def on_command_error(ctx, error):
-    from .helpers import err
+    from helpers import err
     if isinstance(error, commands.CommandNotFound):
         return
     if isinstance(error, commands.MissingPermissions):
