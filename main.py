@@ -25,16 +25,16 @@ bot = commands.Bot(
 )
 
 INITIAL_COGS = [
-    "bot.cogs.moderation",
-    "bot.cogs.automod",
-    "bot.cogs.economy",
-    "bot.cogs.games",
-    "bot.cogs.levels",
-    "bot.cogs.tickets",
-    "bot.cogs.giveaway",
-    "bot.cogs.invites",
-    "bot.cogs.welcome",
-    "bot.cogs.misc",
+    "cogs.moderation",
+    "cogs.automod",
+    "cogs.economy",
+    "cogs.games",
+    "cogs.levels",
+    "cogs.tickets",
+    "cogs.giveaway",
+    "cogs.invites",
+    "cogs.welcome",
+    "cogs.misc",
 ]
 
 
