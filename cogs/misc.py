@@ -2,7 +2,7 @@
 import discord
 from discord.ext import commands
 
-from ..helpers import embed, ok
+from helpers import embed, ok
 
 
 HELP_SECTIONS = {
@@ -80,7 +80,7 @@ class Misc(commands.Cog):
     @commands.command(name="reset")
     @commands.has_permissions(administrator=True)
     async def reset(self, ctx, member: discord.Member):
-        from ..db import update_user
+        from db import update_user
         await update_user(ctx.guild.id, member.id, {
             "balance": 0, "bank": 0, "xp": 0, "level": 0, "luck": 0, "inventory": [],
         })
@@ -108,4 +108,4 @@ class Misc(commands.Cog):
 
 
 async def setup(bot):
-    await bot.add_cog(Misc(bot)
+    await bot.add_cog(Misc(bot))
