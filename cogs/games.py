@@ -4,7 +4,7 @@ import random
 import discord
 from discord.ext import commands
 
-from ..helpers import ok, err, embed
+from helpers import ok, err, embed
 
 
 KISS_GIFS = [
@@ -175,4 +175,4 @@ class Games(commands.Cog):
 
 
 async def setup(bot):
-    await bot.add_cog(Games(bot)
+    await bot.add_cog(Games(bot))
