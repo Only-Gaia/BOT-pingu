@@ -6,8 +6,8 @@ from collections import defaultdict, deque
 import discord
 from discord.ext import commands
 
-from ..db import get_guild, update_guild
-from ..helpers import ok, err, embed
+from db import get_guild, update_guild
+from helpers import ok, err, embed
 
 LINK_RE = re.compile(r"https?://|discord\.gg/", re.IGNORECASE)
 
