@@ -295,3 +295,46 @@ class Economy(commands.Cog):
     @commands.command(name="openbox", aliases=["open_box", "open"])
     async def openbox(self, ctx):
         u = await get_user(ctx.guild.id, ctx.author.id)
+        inv = list(u["inventory"])
+        if not _inv_remove(inv, "box"):
+            return await ctx.send(embed=err("Non hai box da aprire."))
+        prize = random.choices([100, 300, 800, 2000, 5000], weights=[40, 30, 20, 8, 2])[0]
+        await update_user(ctx.guild.id, ctx.author.id, {"inventory": inv})
+        await inc_user(ctx.guild.id, ctx.author.id, {"balance": prize})
+        await ctx.send(embed=ok(f"📦 Il box conteneva {prize} {CURRENCY}!"))
+
+    @commands.command(name="luckybox")
+    async def luckybox(self, ctx):
+        rec = await lucky_claims.find_one({"guild_id": ctx.guild.id, "user_id": ctx.author.id})
+        now = datetime.now(timezone.utc)
+        if rec:
+            last = datetime.fromisoformat(rec["last"])
+            if now - last < timedelta(hours=24):
+                left = timedelta(hours=24) - (now - last)
+                h = int(left.total_seconds()) // 3600
+                m = (int(left.total_seconds()) % 3600) // 60
+                return await ctx.send(embed=err(f"Prossimo luckybox tra {h}h {m}m."))
+        u = await get_user(ctx.guild.id, ctx.author.id)
+        luck_bonus = u.get("luck", 0) * 50
+        prize = random.randint(1500, 5000) + luck_bonus
+        await inc_user(ctx.guild.id, ctx.author.id, {"balance": prize})
+        await lucky_claims.update_one(
+            {"guild_id": ctx.guild.id, "user_id": ctx.author.id},
+            {"$set": {"last": now.isoformat()}},
+            upsert=True,
+        )
+        msg = f"🍀 Luckybox aperto! Hai vinto {prize} {CURRENCY} (bonus fortuna: +{luck_bonus})."
+        await ctx.send(embed=ok(msg))
+
+    @commands.command(name="lucky")
+    async def lucky(self, ctx):
+        cost = 1000
+        u = await get_user(ctx.guild.id, ctx.author.id)
+        if u["balance"] < cost:
+            return await ctx.send(embed=err(f"Servono {cost} {CURRENCY}."))
+        await inc_user(ctx.guild.id, ctx.author.id, {"balance": -cost, "luck": 1})
+        await ctx.send(embed=ok(f"🍀 Fortuna +1 (costo: {cost} {CURRENCY})."))
+
+
+async def setup(bot):
+    await bot.add_cog(Economy(bot))
