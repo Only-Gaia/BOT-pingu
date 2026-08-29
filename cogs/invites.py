@@ -2,8 +2,8 @@
 import discord
 from discord.ext import commands
 
-from ..db import invites_cache, get_guild, update_guild
-from ..helpers import ok, embed
+from db import invites_cache, get_guild, update_guild
+from helpers import ok, embed
 
 
 class Invites(commands.Cog):
