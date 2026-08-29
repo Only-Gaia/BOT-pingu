@@ -2,8 +2,8 @@
 import discord
 from discord.ext import commands
 
-from ..db import tickets as tickets_col
-from ..helpers import embed
+from db import tickets as tickets_col
+from helpers import embed
 
 
 TICKET_TOPICS = [
