@@ -6,8 +6,8 @@ from datetime import datetime, timezone, timedelta
 import discord
 from discord.ext import commands
 
-from ..db import get_user, update_user, inc_user, users, daily_claims, lucky_claims
-from ..helpers import ok, err, embed
+from db import get_user, update_user, inc_user, users, daily_claims, lucky_claims
+from helpers import ok, err, embed
 
 
 SHOP = {
@@ -323,17 +323,4 @@ class Economy(commands.Cog):
             {"$set": {"last": now.isoformat()}},
             upsert=True,
         )
-        await ctx.send(embed=ok(f"🍀 Luckybox aperto! Hai vinto {prize} {CURRENCY} (bonus fortuna: +{luck_bonus})."))
-
-    @commands.command(name="lucky")
-    async def lucky(self, ctx):
-        cost = 1000
-        u = await get_user(ctx.guild.id, ctx.author.id)
-        if u["balance"] < cost:
-            return await ctx.send(embed=err(f"Servono {cost} {CURRENCY}."))
-        await inc_user(ctx.guild.id, ctx.author.id, {"balance": -cost, "luck": 1})
-        await ctx.send(embed=ok(f"🍀 Fortuna +1 (costo: {cost} {CURRENCY})."))
-
-
-async def setup(bot):
-    await bot.add_cog(Economy(bot))
+        await ctx.send(embed=ok(f"🍀 Luckybox aperto! Hai vinto {prize} {CURRENCY} (bonus fortuna:
