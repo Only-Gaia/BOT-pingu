@@ -4,8 +4,8 @@ from datetime import timedelta, datetime, timezone
 import discord
 from discord.ext import commands
 
-from ..db import warns as warns_col
-from ..helpers import ok, err, embed
+from db import warns as warns_col
+from helpers import ok, err, embed
 
 
 class Moderation(commands.Cog):
