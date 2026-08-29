@@ -4,8 +4,8 @@ import random
 import discord
 from discord.ext import commands
 
-from ..db import get_user, update_user, messages as msg_col, get_guild, update_guild
-from ..helpers import ok, embed, level_from_xp, xp_for_level
+from db import get_user, update_user, messages as msg_col, get_guild, update_guild
+from helpers import ok, embed, level_from_xp, xp_for_level
 
 
 class Levels(commands.Cog):
