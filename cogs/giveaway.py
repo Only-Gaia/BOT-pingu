@@ -5,8 +5,8 @@ from datetime import datetime, timezone, timedelta
 import discord
 from discord.ext import commands, tasks
 
-from ..db import giveaways as gw_col
-from ..helpers import ok, err, embed
+from db import giveaways as gw_col
+from helpers import ok, err, embed
 
 
 def parse_duration(s: str) -> int:
